@@ -1,0 +1,62 @@
+<%- include('partials/header') %>
+
+<article class="meal">
+  <div class="meal-top">
+    <img src="<%= meal.image %>" alt="<%= meal.name %>" class="meal-image"
+         onerror="this.onerror=null;this.src='/images/placeholder.svg'">
+
+    <div class="meal-info">
+      <h1><%= meal.name %></h1>
+      <p class="card-meta">
+        <a class="badge" href="/category/<%= encodeURIComponent(meal.category) %>"><%= meal.category %></a>
+        <a class="badge badge-light" href="/cuisine/<%= encodeURIComponent(meal.area) %>"><%= meal.area %></a>
+      </p>
+
+      <% if (meal.tags.length > 0) { %>
+        <p class="tags">
+          <% meal.tags.forEach(function (tag) { %><span class="tag">#<%= tag %></span><% }) %>
+        </p>
+      <% } %>
+
+      <h2><%= meal.ingredientCount %> ingredients</h2>
+      <ul class="ingredients">
+        <% meal.ingredients.forEach(function (item) { %>
+          <li>
+            <span><%= item.name %></span>
+            <span class="muted"><%= item.measure || 'to taste' %></span>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2>Instructions</h2>
+    <% if (meal.steps.length === 0) { %>
+      <p class="message">No instructions for this recipe.</p>
+    <% } else { %>
+      <ol class="steps">
+        <% meal.steps.forEach(function (step) { %>
+          <li><%= step %></li>
+        <% }) %>
+      </ol>
+    <% } %>
+  </section>
+
+  <% if (meal.video) { %>
+    <section class="section">
+      <h2>Video</h2>
+      <div class="video">
+        <iframe src="<%= meal.video %>" title="Video: <%= meal.name %>" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </section>
+  <% } %>
+
+  <% if (meal.source) { %>
+    <p class="muted">Original recipe: <a href="<%= meal.source %>" target="_blank" rel="noopener">source</a></p>
+  <% } %>
+
+  <p><a href="/random" class="btn btn-outline">Another random recipe</a></p>
+</article>
+
+<%- include('partials/footer') %>
