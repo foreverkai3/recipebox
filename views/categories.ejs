@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+
+<section class="section">
+  <h1>Categories</h1>
+
+  <% if (categories.length === 0) { %>
+    <p class="message">No categories to show right now.</p>
+  <% } else { %>
+    <div class="grid">
+      <% categories.forEach(function (c) { %>
+        <a class="card" href="/category/<%= encodeURIComponent(c.name) %>">
+          <img src="<%= c.image %>" alt="<%= c.name %>" class="contain" loading="lazy"
+               onerror="this.onerror=null;this.src='/images/placeholder.svg'">
+          <div class="card-body">
+            <h3><%= c.name %></h3>
+            <p class="muted small"><%= c.description %></p>
+          </div>
+        </a>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

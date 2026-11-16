@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+
+<section class="section">
+  <h1>Cuisines of the world</h1>
+  <p class="muted"><%= cuisines.length %> cuisines</p>
+
+  <% if (cuisines.length === 0) { %>
+    <p class="message">No cuisines to show right now.</p>
+  <% } else { %>
+    <div class="pill-list">
+      <% cuisines.forEach(function (name) { %>
+        <a class="pill" href="/cuisine/<%= encodeURIComponent(name) %>"><%= name %></a>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

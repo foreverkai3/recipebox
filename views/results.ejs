@@ -1,0 +1,33 @@
+<%- include('partials/header') %>
+
+<section class="section">
+  <p class="eyebrow"><%= subheading %></p>
+  <div class="section-head">
+    <h1><%= heading %></h1>
+
+    <% if (sortLinks && count > 1) { %>
+      <div class="sort">
+        Sort:
+        <a href="<%= basePath %>?sort=asc" class="<%= sort === 'asc' ? 'active' : '' %>">A &rarr; Z</a>
+        <a href="<%= basePath %>?sort=desc" class="<%= sort === 'desc' ? 'active' : '' %>">Z &rarr; A</a>
+      </div>
+    <% } %>
+  </div>
+
+  <% if (count === 0) { %>
+    <div class="empty">
+      <h2>No recipes found</h2>
+      <p>Try another word, check the spelling, or search by ingredient instead of name.</p>
+      <a href="/" class="btn">Back to search</a>
+    </div>
+  <% } else { %>
+    <p class="muted"><%= count %> <%= count === 1 ? 'recipe' : 'recipes' %> found</p>
+    <div class="grid">
+      <% meals.forEach(function (meal) { %>
+        <%- include('partials/mealCard', { meal: meal }) %>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

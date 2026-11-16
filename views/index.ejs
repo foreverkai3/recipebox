@@ -1,0 +1,73 @@
+<%- include('partials/header') %>
+
+<section class="hero">
+  <h1>Find a recipe from anywhere in the world</h1>
+  <p>Search by dish name or by the main ingredient you already have at home.</p>
+
+  <form class="search-form" action="/search" method="POST" novalidate>
+    <div class="field field-grow">
+      <label for="query">What are you looking for?</label>
+      <input type="text" id="query" name="query" value="<%= query %>"
+             placeholder="e.g. Arrabiata or chicken" maxlength="50"
+             class="<%= error ? 'input-error' : '' %>">
+      <small class="hint">2&ndash;50 characters: letters, spaces, hyphens, apostrophes.</small>
+    </div>
+
+    <div class="field">
+      <label for="type">Search by</label>
+      <select id="type" name="type">
+        <option value="name" <%= type === 'name' ? 'selected' : '' %>>Dish name</option>
+        <option value="ingredient" <%= type === 'ingredient' ? 'selected' : '' %>>Main ingredient</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="sort">Sort</label>
+      <select id="sort" name="sort">
+        <option value="asc">A &rarr; Z</option>
+        <option value="desc">Z &rarr; A</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn">Search</button>
+  </form>
+
+  <% if (error) { %>
+    <p class="message message-error" role="alert"><%= error %></p>
+  <% } %>
+</section>
+
+<% if (featured) { %>
+  <section class="section">
+    <div class="section-head">
+      <h2>Recipe of the moment</h2>
+      <a href="/random" class="btn btn-outline">Show another random recipe</a>
+    </div>
+    <div class="grid grid-featured">
+      <%- include('partials/mealCard', { meal: featured }) %>
+    </div>
+  </section>
+<% } %>
+
+<section class="section">
+  <div class="section-head">
+    <h2>Browse by category</h2>
+    <a href="/categories">All categories &rarr;</a>
+  </div>
+
+  <% if (categories.length === 0) { %>
+    <p class="message">No categories to show right now.</p>
+  <% } else { %>
+    <div class="grid grid-small">
+      <% categories.forEach(function (c) { %>
+        <a class="category-chip" href="/category/<%= encodeURIComponent(c.strCategory) %>">
+          <img src="<%= c.strCategoryThumb %>" alt="" loading="lazy"
+               onerror="this.onerror=null;this.src='/images/placeholder.svg'">
+          <span><%= c.strCategory %></span>
+        </a>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,14 @@
+<%# One meal card. Expects a variable "meal" from formatMealCard() %>
+<a class="card" href="/meal/<%= meal.id %>">
+  <img src="<%= meal.image %>" alt="<%= meal.name %>" loading="lazy"
+       onerror="this.onerror=null;this.src='/images/placeholder.svg'">
+  <div class="card-body">
+    <h3><%= meal.name %></h3>
+    <% if (meal.category || meal.area) { %>
+      <p class="card-meta">
+        <% if (meal.category) { %><span class="badge"><%= meal.category %></span><% } %>
+        <% if (meal.area) { %><span class="badge badge-light"><%= meal.area %></span><% } %>
+      </p>
+    <% } %>
+  </div>
+</a>
